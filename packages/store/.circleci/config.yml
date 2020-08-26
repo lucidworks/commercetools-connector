@@ -1,0 +1,43 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      # the Docker image with Cypress dependencies
+      - image: cypress/base:10
+        environment:
+          JEST_JUNIT_OUTPUT: test-results/unit/output.xml
+
+    working_directory: ~/sunrise-spa
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v6-deps-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v6-deps
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: v6-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - /usr/local/share/.cache
+
+      - run:
+          name: Run Unit tests
+          command: yarn test:unit --ci --reporters=default --reporters=jest-junit --no-cache
+
+      - run:
+          name: Run E2E tests
+          command: yarn test:e2e --headless --reporter mocha-multi-reporters
+      - store_artifacts:
+          name: Store E2E videos
+          path: tests/e2e/videos
+      - store_artifacts:
+          name: Store E2E screenshots
+          path: tests/e2e/screenshots
+
+      - store_test_results:
+          path: test-results
