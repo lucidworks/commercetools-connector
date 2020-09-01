@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const JWT = require('./auth/jwt');
+//const { config } = require('dotenv/types');
 
 /**
  *
@@ -17,13 +18,16 @@ class Config {
    */
   static export() {
     return {
-      FUSION_SIGNING_KEY: '',
-      FUSION_HOST: '',
-      FUSION_PORT: 0,
-      FUSION_ISS: '',
-      FUSION_SUB: '',
-      FUSION_USERNAME: '',
-      FUSION_APP: ''
+      FUSION_SIGNING_KEY: 'abcd123',
+      FUSION_HOST: '34.96.230.28',
+      FUSION_PORT: '8764',
+      FUSION_ISS: 'sunrise',
+      FUSION_SUB: 'sunrise',
+      FUSION_USERNAME: 'sunrise-user',
+      FUSION_APP: 'sunrise',
+      FUSION_COLLECTION: 'sunrise',
+      FUSION_PARSER: 'sunrise',
+      FUSION_AUTH: 'c3VucmlzZTpQQHNzdzByZA==' //c3VucmlzZTpQQHNzdzByZA==, c3VucmlzZS11c2VyOlBAc3N3MHJk
     };
   }
 
@@ -35,7 +39,7 @@ class Config {
    * @memberof Config
    */
   static url() {
-    return `http://${process.env.FUSION_HOST}:${process.env.FUSION_PORT}`;
+    return `http://${Config.export().FUSION_HOST}:${Config.export().FUSION_PORT}`;
   }
 
   /**
@@ -65,14 +69,19 @@ class Config {
     if (process.env.FUSION_JWT_TOKEN) {
       console.log('exists');
     } else {
-      const token = JWT.sign(
+       const token = JWT.sign(
         Config.jwtPayload(),
         process.env.FUSION_SIGNING_KEY
       );
+
       process.env.FUSION_JWT_TOKEN = token;
     }
 
     return process.env.FUSION_JWT_TOKEN;
+  }
+
+  static basicAuth() {
+    return Config.export().FUSION_AUTH;
   }
 }
 

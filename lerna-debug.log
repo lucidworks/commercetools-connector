@@ -11,6 +11,7 @@
 4 silly rimrafDir C:\Users\Imran\workspace\lucidworks\packages\fusion-sdk\node_modules
 5 info clean removing C:\Users\Imran\workspace\lucidworks\packages\store\node_modules
 6 silly rimrafDir C:\Users\Imran\workspace\lucidworks\packages\store\node_modules
-7 error Error: Command failed: C:\working\nodejs\node.exe C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\rimraf\bin.js --no-glob C:\Users\Imran\workspace\lucidworks\packages\fusion-sdk\node_modules\
-7 error     at makeError (C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:174:9)
-7 error     at C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:278:16
+7 verbose rimrafDir removed C:\Users\Imran\workspace\lucidworks\packages\fusion-sdk\node_modules
+8 error Error: Command failed: C:\working\nodejs\node.exe C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\rimraf\bin.js --no-glob C:\Users\Imran\workspace\lucidworks\packages\store\node_modules\
+8 error     at makeError (C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:174:9)
+8 error     at C:\Users\Imran\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:278:16

@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable */
 import config from '../../sunrise.config';
 
 export const withPage = ({
@@ -95,27 +95,6 @@ export const toUrl = (
     .filter(([, v]) => v !== undefined);
   queryParams.push(['limit', pageSize]);
   queryParams.push(['offset', pageSize * (page - 1)]);
-
-  // if(queryParams[0][0].includes("text.")) {
-  //   //return '{"limit":75,"offset":0,"count":0,"total":0,"results":[],"facets":{}}'
-  //   const val = base
-  //   + (queryParams.length ? '?' : '')
-  //   + queryParams
-  //     .reduce(
-  //       (q, [key, value]) => {
-  //         q.set(key, value);
-  //         return q;
-  //       },
-  //       new URLSearchParams(),
-  //     )
-  //     .toString();
-        
-  //   console.log(val);
-    
-  //   return val;
-  
-  
-  // } else {
     return (
       base
       + (queryParams.length ? '?' : '')
@@ -129,7 +108,4 @@ export const toUrl = (
         )
         .toString()
     );
-  //}
-
-
 };

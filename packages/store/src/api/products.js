@@ -3,7 +3,8 @@ import {
   withToken, groupFetchJson, makeConfig, toUrl, baseUrl,
 } from './api';
 
-import {FusionQuery, runQuery} from 'fusion-sdk';
+//process.env.FUSION_SIGNING_KEY = '***REMOVED***';
+const runQuery = require ('fusion-sdk/src/api/query').runQuery;
 
 const products = {
   get: withToken(
@@ -17,11 +18,9 @@ const products = {
         const urlparams = Object.entries(query)
         .filter(([, v]) => v !== undefined);
 
-      if(isSearch(urlparams)) {
-        // const fusion = new FusionQuery();
-        // return fusion.runQuery(getSearchValue(urlparams))
-        //return JSON.parse(runQuery(urlparams))
-        return JSON.parse('{"limit":75,"offset":0,"count":0,"total":0,"results":[],"facets":{}}');
+      let searchArray = isSearch(urlparams);
+      if(searchArray[0]) {
+        return runQuery(searchArray[1], searchArray[2]).then(JSON.parse);
       } else {
         return groupFetchJson(
           toUrl(
@@ -36,22 +35,27 @@ const products = {
   getItem: query => query,
 };
 
-function getSearchValue(obj) {
-  for (const [key, value] of obj) {
-    //console.log(`${key}: ${value}`)
-    if(key === 'text.en' || key === 'text.de') {
-      return value;
-    }
-  }
-}
+// function getSearchValue(obj) {
+//   for (const [key, value] of obj) {
+//     //console.log(`${key}: ${value}`)
+//     if(key === 'text.en' || key === 'text.de') {
+//       return value;
+//     }
+//   }
+// }
 
 function isSearch(obj) {
+  const searchArray = new Array(3);
   for (const [key, value] of obj) {
     if(key === 'text.en' || key === 'text.de') {
-      return true;
+      searchArray[0] = true;
+      searchArray[1] = value;
+    }
+    if(key === 'sort') {
+      searchArray[2] = value;
     }
   }
-  return false;
+  return searchArray;
 }
 
 export default products;
