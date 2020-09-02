@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable */
 export { default as products } from './products';
 export const onlyLastRequestedPromise = ((promiseIds) => {
   const whenResolve = (promise, id, promiseID, resolveValue) => {
