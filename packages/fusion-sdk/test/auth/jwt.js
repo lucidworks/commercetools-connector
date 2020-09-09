@@ -4,7 +4,7 @@ const JWT = require('../../src/auth/jwt');
 
 test.beforeEach(t => {
   const jwt = new JWT();
-  Object.assign(t.context, { jwt });
+  Object.assign(t.context, {jwt});
 });
 
 test('returns itself', t => {

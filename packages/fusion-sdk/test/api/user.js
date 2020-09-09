@@ -4,7 +4,7 @@ const User = require('../../src/api/user');
 
 test.beforeEach(t => {
   const user = new User();
-  Object.assign(t.context, { user });
+  Object.assign(t.context, {user});
 });
 
 test('returns itself', t => {

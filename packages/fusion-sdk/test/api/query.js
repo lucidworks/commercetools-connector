@@ -2,16 +2,16 @@ const test = require('ava');
 
 const Query = require('../../src/api/query');
 
-test.beforeEach((t) => {
+test.beforeEach(t => {
   const query = new Query();
-  Object.assign(t.context, { query });
+  Object.assign(t.context, {query});
 });
 
-test('returns itself', (t) => {
+test('returns itself', t => {
   t.true(t.context.query instanceof Query);
 });
 
-test('Run Query', async (t) => {
+test('Run Query', async t => {
   const query = new Query();
   try {
     const result = await query.run('rabbit');
