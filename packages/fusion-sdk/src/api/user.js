@@ -16,7 +16,7 @@ class User {
     return new Promise((resolve, reject) => {
       fetch(`${Config.url()}/api/users`, {
         method: 'GET',
-        headers: { authorization: `Bearer ${Config.jwtToken()}` }
+        headers: {authorization: `Bearer ${Config.jwtToken()}`}
       })
         .then(response => response.json())
         .then(json => {

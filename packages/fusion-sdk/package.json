@@ -1,6 +1,6 @@
 {
   "name": "fusion-sdk",
-  "description": "my dazzling project",
+  "description": "Lucidworks Fusion SDK",
   "version": "0.1.0",
   "author": "Raul Quintanilla <raul@newelevation.com> (http://newelevation.com)",
   "bugs": {
@@ -13,6 +13,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.1",
     "perf_hooks": "0.0.1"
   },
   "devDependencies": {
@@ -22,7 +23,7 @@
     "codecov": "latest",
     "cross-env": "latest",
     "eslint": "6.x",
-    "eslint-config-xo-lass": "latest",
+    "eslint-config-xo-lass": "^1.0.3",
     "fixpack": "latest",
     "husky": "latest",
     "lint-staged": "latest",
@@ -49,14 +50,14 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "yarn run lint:js && yarn run lint:md",
-    "lint:js": "xo",
+    "lint:js": "xo --fix",
     "lint:md": "remark . -qfo",
-    "pretest": "yarn run lint",
     "test": "cross-env NODE_ENV=test ava",
     "test-coverage": "cross-env NODE_ENV=test nyc yarn run test"
   },
+  "sourceType": "module",
   "xo": {
-    "prettier": true,
+    "prettier": false,
     "space": true,
     "extends": [
       "xo-lass"

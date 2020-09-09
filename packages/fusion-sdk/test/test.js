@@ -4,7 +4,7 @@ const Script = require('..');
 
 test.beforeEach(t => {
   const script = new Script({});
-  Object.assign(t.context, { script });
+  Object.assign(t.context, {script});
 });
 
 test('returns itself', t => {
@@ -17,11 +17,11 @@ test('sets a config object', t => {
 });
 
 test('renders name', t => {
-  const { script } = t.context;
+  const {script} = t.context;
   t.is(script.renderName(), 'script');
 });
 
 test('sets a default name', t => {
-  const { script } = t.context;
+  const {script} = t.context;
   t.is(script._name, 'script');
 });
