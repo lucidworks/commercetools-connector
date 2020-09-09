@@ -18,6 +18,8 @@ class Config {
    */
   static export() {
     return {
+      FUSION_PARSER_TYPE: 'text', //text, json
+      FUSION_JWT_TOKEN: '***REMOVED***',
       FUSION_SIGNING_KEY: 'Commercetools',
       FUSION_HOST: 'general.dcom.lucidworkstest.com',
       FUSION_PORT: '443',
@@ -68,18 +70,19 @@ class Config {
    * @memberof Config
    */
   static jwtToken() {
-    if (process.env.FUSION_JWT_TOKEN) {
+    if (Config.export().FUSION_JWT_TOKEN) {
       console.log('exists');
     } else {
       const token = JWT.sign(
         Config.jwtPayload(),
-        process.env.FUSION_SIGNING_KEY
+        //process.env.FUSION_SIGNING_KEY
+        Config.export().FUSION_SIGNING_KEY
       );
 
-      process.env.FUSION_JWT_TOKEN = token;
+      Config.export().FUSION_JWT_TOKEN = token;
     }
 
-    return process.env.FUSION_JWT_TOKEN;
+    return Config.export().FUSION_JWT_TOKEN;
   }
 
   static basicAuth() {
