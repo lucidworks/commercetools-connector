@@ -32,16 +32,18 @@ class Query {
         {
           method: 'GET',
           headers: { 
-            'Authorization': `Basic ${Config.basicAuth()}`
+            'Authorization': `Bearer ${Config.jwtToken()}`
           },
         }
       ) .then((response) => response.json())
         .then((json) => {
-          
-          //let sunriseJsonIndexed = getSunriseJson_indexed(json.response.docs);
-          //resolve(JSON.stringify(sunriseJsonIndexed))
-          
-          let sunriseJsonTxt = getSunriseJson_text(json.response.docs, sortOrig);
+          let sunriseJsonTxt;
+          if(Config.export().FUSION_PARSER_TYPE === 'json') {
+            sunriseJsonTxt = getSunriseJson_indexed(json.response.docs);
+          } else { //default 'text'
+            sunriseJsonTxt = getSunriseJson_text(json.response.docs, sortOrig);
+          }
+
           resolve (JSON.stringify(sunriseJsonTxt));
 
         })
