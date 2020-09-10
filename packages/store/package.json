@@ -7,7 +7,7 @@
     "start": "vue-cli-service serve",
     "start:functions": "netlify-lambda serve dist/functions/product",
     "set_env": "env.cmd",
-    "build": "npm run build:functions && vue-cli-service build",
+    "build": "vue-cli-service build",
     "build:functions": "netlify-lambda build src/functions/product",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
