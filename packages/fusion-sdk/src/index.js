@@ -2,5 +2,6 @@
 
 const User = require('./api/user');
 const { Query, runQuery } = require('./api/query');
+const { Index } = require('./api/index')
 
-module.exports = { User, Query, runQuery };
+module.exports = { User, Query, runQuery , Index};
