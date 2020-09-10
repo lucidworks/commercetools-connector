@@ -11,7 +11,7 @@ exports.handler = async (event, context, callback) => {
     const res = await Index.create([value]);
     console.log(`res : \n${JSON.stringify(res, null, 2)}`);
   } catch (error) {
-    console.error('Could not create');
+    console.error('Could not create', error);
   }
 
   callback(null, {
