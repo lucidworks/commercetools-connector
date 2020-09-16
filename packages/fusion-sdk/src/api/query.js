@@ -162,18 +162,6 @@ function getSunriseJson_indexed(docs) {
 }
 
 /**
- * Called from the store app
- * 
- * @param {*} q 
- * @param {*} s 
- */
-export const runQuery = async (q, s) => {
-  const fusion = new Query();
-  return fusion.run(q, s);
-} 
-
-
-/**
  * TEST for command line use
  * usage:  node src/api/query.js wallet
  */
@@ -197,4 +185,4 @@ export const runQuery = async (q, s) => {
 //   }
 // })()
 
-export default Query
+module.exports = Query

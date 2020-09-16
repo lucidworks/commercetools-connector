@@ -1,6 +1,6 @@
 /* eslint-disable */
 
 const User = require('./api/user');
-const { Query, runQuery } = require('./api/query');
+const { Query } = require('./api/query');
 
-module.exports = { User, Query, runQuery };
+module.exports = { User, Query };

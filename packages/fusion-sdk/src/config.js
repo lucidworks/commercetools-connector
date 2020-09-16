@@ -71,7 +71,7 @@ class Config {
    */
   static jwtToken() {
     if (Config.export().FUSION_JWT_TOKEN) {
-      console.log('exists');
+      //console.log('exists');
     } else {
       const token = JWT.sign(
         Config.jwtPayload(),
