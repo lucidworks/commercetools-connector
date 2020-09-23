@@ -1,34 +1,34 @@
 const fetch = require('node-fetch');
 const Config = require('../config');
-const {isNull} = require('util');
 const {performance} = require('perf_hooks');
 
 /**
- * Component wrapper for Fusion API - Index
+ * Component wrapper for Fusion API - Users
  *
- * @class Index
+ * @class Delete
  */
-class Index {
+class Delete {
   /**
    * Create an index using a json file
    *
-   * @memberof Index
+   * @memberof Delete
    */
-  async create(dataJson) {
+  async delete(id) {
     return new Promise((resolve, reject) => {
-      const data = dataJson || process.argv.slice(2)[0];
+      const recordId = id || process.argv.slice(2)[0];
 
       fetch(
-        `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
-          Config.export().FUSION_COLLECTION
-        }/?parserId=${Config.export().FUSION_PARSER}`,
+        `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${Config.export().FUSION_INDEX_PROFILE}`,
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${Config.jwtToken()}`
+            'Authorization': `Bearer ${Config.jwtToken()}`,
+            'Content-Type': 'application/json'
           },
-          // headers: { authorization: `Bearer ${Config.jwtToken()}` },
-          body: require('fs').createReadStream(data)
+          body: JSON.stringify({
+            id: recordId,
+            action: 'DELETE'
+          })
         }
       )
         .then(response => response.json())
@@ -52,10 +52,10 @@ class Index {
   console.log('start');
   const t0 = performance.now();
   try {
-    const ndx = new Index();
-    const result = await ndx.create();
+    const del = new Delete();
+    const result = await del.delete();
     const t1 = performance.now();
-    console.log('indexed in ' + (t1 - t0) + ' milliseconds.');
+    console.log('deleted in ' + (t1 - t0) + ' milliseconds.');
     // console.log(require('util').inspect(result, false, null, true));
   } catch (err) {
     console.error(err.message);
@@ -64,4 +64,4 @@ class Index {
   }
 })();
 
-module.exports = Index;
+module.exports = Delete;
