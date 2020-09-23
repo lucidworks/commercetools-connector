@@ -28,6 +28,7 @@ class Config {
       FUSION_USERNAME: 'commercetools_dev',
       FUSION_APP: 'Commercetools',
       FUSION_COLLECTION: 'sunrise',
+      FUSION_INDEX_PROFILE: 'sunrise-testing',
       FUSION_PARSER: 'sunrise',
       FUSION_AUTH: '***REMOVED***
     };
