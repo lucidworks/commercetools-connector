@@ -18,7 +18,7 @@ class Config {
    */
   static export() {
     return {
-      FUSION_PARSER_TYPE: 'text', //text, json
+      FUSION_PARSER_TYPE: 'json', //text, json
       FUSION_JWT_TOKEN: '***REMOVED***',
       FUSION_SIGNING_KEY: 'Commercetools',
       FUSION_HOST: 'general.dcom.lucidworkstest.com',

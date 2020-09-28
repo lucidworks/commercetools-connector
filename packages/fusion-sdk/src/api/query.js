@@ -15,17 +15,20 @@ class Query {
    *
    * @memberof Query
    */
-  async run(queryString, sort, parser) {
-
-    const query = queryString || process.argv.slice(2)[0];
-    const sortOrig = sort || process.argv.slice(2)[1] + ' ' + process.argv.slice(2)[2];
-    const parserType = parser || Config.export().FUSION_PARSER_TYPE;
+  async run(query, sort, parser, queryField) {
 
     let sortParam = '';
     if(typeof sort !== 'undefined')
       sortParam = '&sort=' + sort.replace(/\s/g, '_dt ');
 
-    let urlParams = 'q='+query+sortParam; 
+    let queryFieldParam = '';
+    if(typeof queryField !== 'undefined')
+      queryFieldParam = '&qf=' + queryField;
+
+    let urlParams = 'q='+query+sortParam+queryFieldParam; 
+
+    if(typeof parser === 'undefined')
+      parser = Config.export().FUSION_PARSER_TYPE
 
     return new Promise((resolve, reject) => {
       fetch(
@@ -38,15 +41,16 @@ class Query {
         }
       ) .then((response) => response.json())
         .then((json) => {
-          let sunriseJsonTxt;
-          if(parserType === 'json') {
-            sunriseJsonTxt = getSunriseJson_indexed(json.response.docs);
-          } else { //default 'text'
-            sunriseJsonTxt = getSunriseJson_text(json.response.docs, sortOrig);
-          }
 
-          resolve (JSON.stringify(sunriseJsonTxt));
-
+            let sunriseJsonTxt = json;
+            if(parser === 'json') {
+              sunriseJsonTxt = getSunriseJson_indexed(json.response.docs);
+            } else if (parser === 'text') {
+              sunriseJsonTxt = getSunriseJson_text(json.response.docs, sort);
+            }
+  
+            resolve (JSON.stringify(sunriseJsonTxt));
+          
         })
         .catch((err) => {
           console.log(err);
@@ -173,14 +177,13 @@ function getSunriseJson_indexed(docs) {
 //   //var t0 = performance.now();
 //   try {
 //     const qry = new Query();
-//     //console.log('start1')
-//     const result = await qry.run() // your personal
 
-//     //console.log('start2')
+//     const result = await qry.run(process.argv.slice(2)[0], '_dt asc')
+
 //     //var t1 = performance.now();
 //     //console.log("queried in " + (t1 - t0) + " milliseconds.");
 //     console.log(require('util').inspect(result, false, null, true));
-//     //console.log('start3')
+
 //   } catch (err) {
 //     console.error(err.message);
 //   } finally {
