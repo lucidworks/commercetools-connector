@@ -15,10 +15,11 @@ class Query {
    *
    * @memberof Query
    */
-  async run(queryString, sort) {
+  async run(queryString, sort, parser) {
 
     const query = queryString || process.argv.slice(2)[0];
     const sortOrig = sort || process.argv.slice(2)[1] + ' ' + process.argv.slice(2)[2];
+    const parserType = parser || Config.export().FUSION_PARSER_TYPE;
 
     let sortParam = '';
     if(typeof sort !== 'undefined')
@@ -38,7 +39,7 @@ class Query {
       ) .then((response) => response.json())
         .then((json) => {
           let sunriseJsonTxt;
-          if(Config.export().FUSION_PARSER_TYPE === 'json') {
+          if(parserType === 'json') {
             sunriseJsonTxt = getSunriseJson_indexed(json.response.docs);
           } else { //default 'text'
             sunriseJsonTxt = getSunriseJson_text(json.response.docs, sortOrig);
@@ -59,6 +60,7 @@ class Query {
  * Return the fusion response in a commercetools json format
  * @param {*} docs 
  */
+/* istanbul ignore next */
 function getSunriseJson_text(docs, sort) {
   let sunriseJson = {}
   let results = [];
@@ -83,6 +85,7 @@ function getSunriseJson_text(docs, sort) {
  * Return the fusion response in a commercetools json format
  * @param {*} docs 
  */
+  /* istanbul ignore next */
 function getSunriseJson_indexed(docs) {
 
     let sunriseJson = {};
@@ -162,18 +165,6 @@ function getSunriseJson_indexed(docs) {
 }
 
 /**
- * Called from the store app
- * 
- * @param {*} q 
- * @param {*} s 
- */
-export const runQuery = async (q, s) => {
-  const fusion = new Query();
-  return fusion.run(q, s);
-} 
-
-
-/**
  * TEST for command line use
  * usage:  node src/api/query.js wallet
  */
@@ -197,4 +188,4 @@ export const runQuery = async (q, s) => {
 //   }
 // })()
 
-export default Query
+module.exports = Query

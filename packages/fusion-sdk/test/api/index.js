@@ -1,6 +1,6 @@
 const test = require('ava');
 
-const Index = require('../../src/api');
+const Index = require('../../src/api/index');
 
 test.beforeEach(t => {
   const index = new Index();
