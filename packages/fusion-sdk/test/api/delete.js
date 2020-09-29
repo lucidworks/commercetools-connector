@@ -1,5 +1,4 @@
 const test = require('ava');
-
 const Delete = require('../../src/api/delete');
 
 test.beforeEach(t => {
