@@ -6,9 +6,9 @@ exports.handler = async (event, context, callback) => {
   // const value = JSON.parse(Buffer.from(message.message.data, 'base64').toString());
   console.log(`Message : \n${JSON.stringify(message, null, 2)}`);
 
-
+  const api = new Index();
   try {
-    const res = await Index.create(message);
+    const res = await api.create(message);
     console.log(`Baseline Complete \n${JSON.stringify(res, null, 2)}`);
   } catch (error) {
     console.error('Could not complete import baseline', error);
