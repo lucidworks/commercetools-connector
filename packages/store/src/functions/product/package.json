@@ -1,8 +1,0 @@
-{
-  "name": "product-function",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "fusion-sdk": "^0.1.0"
-  }
-}
