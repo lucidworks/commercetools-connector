@@ -11,7 +11,7 @@ exports.handler = async (event, context, callback) => {
     const res = await api.create(message);
     console.log(`Baseline Complete \n${JSON.stringify(res, null, 2)}`);
   } catch (error) {
-    console.log(`Baseline Complete \n${JSON.stringify(res, null, 2)}`);
+    console.log(`Baseline Complete \n${JSON.stringify(message, null, 2)}`);
     // console.error('Could not complete import baseline', error);
   }
 
