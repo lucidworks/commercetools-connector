@@ -174,14 +174,14 @@ function getSunriseJson_indexed(docs) {
  */
 // (async () => {
 //   console.log('start')
-//   //var t0 = performance.now();
+//   var t0 = performance.now();
 //   try {
 //     const qry = new Query();
 
 //     const result = await qry.run(process.argv.slice(2)[0], '_dt asc')
 
-//     //var t1 = performance.now();
-//     //console.log("queried in " + (t1 - t0) + " milliseconds.");
+//     var t1 = performance.now();
+//     console.log("queried in " + (t1 - t0) + " milliseconds.");
 //     console.log(require('util').inspect(result, false, null, true));
 
 //   } catch (err) {

@@ -17,12 +17,7 @@ class Index {
 
    async create(jsonArray) {
     return new Promise((resolve, reject) => {
-      const data = dataJson || process.argv.slice(2)[0];
-
-      /**
-       * we need to have a parser on fusion that parses json lists as 'indexed_numbered' and not 'multivalued' which is the default
-       * use the name of that parser for the value of the parserId param
-       */
+      const data = jsonArray || process.argv.slice(2)[0];
       fetch(
         `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
           Config.export().FUSION_COLLECTION
@@ -30,7 +25,7 @@ class Index {
         {
           method: 'POST',
           headers: {
-            Authorization: `Basic ${Config.basicAuth()}`
+            'Authorization': `Bearer ${Config.jwtToken()}`
           },
           // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: jsonArray
@@ -86,9 +81,9 @@ class Index {
   const t0 = performance.now();
   try {
     const ndx = new Index();
-    const result = await ndx.create();
+    const result = await ndx.createFromFile();
     const t1 = performance.now();
-    console.log('indexed in ' + (t1 - t0) + ' milliseconds.');
+    console.log('indexed in ' + Math.round(t1 - t0) + ' milliseconds.');
     // console.log(require('util').inspect(result, false, null, true));
   } catch (err) {
     console.error(err.message);
