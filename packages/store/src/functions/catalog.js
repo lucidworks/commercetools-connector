@@ -9,7 +9,7 @@ exports.handler = async (event, context, callback) => {
 
   try {
     const res = await Index.create(message);
-    console.log(`Index Updated \n${JSON.stringify(res, null, 2)}`);
+    console.log(`Baseline Complete \n${JSON.stringify(res, null, 2)}`);
   } catch (error) {
     console.error('Could not complete import baseline', error);
   }
@@ -17,7 +17,7 @@ exports.handler = async (event, context, callback) => {
   callback(null, {
     statusCode: 200,
     body: JSON.stringify({
-      data: value,
+      data: message,
     }),
   });
 };
