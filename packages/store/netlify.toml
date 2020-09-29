@@ -1,7 +1,6 @@
 [build]
   command = "yarn build"
   publish = "dist"
-
 [template.environment]
   VUE_APP_CT_PROJECT_KEY = "Your project key (optional)"
   VUE_APP_CT_CLIENT_ID = "Your client ID (if project key set)"

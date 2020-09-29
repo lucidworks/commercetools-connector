@@ -14,7 +14,7 @@ test('returns itself', t => {
 test('Create Index', async t => {
   const index = new Index();
   try {
-    const create = await index.create('./data.json');
+    const create = await index.createFromFile('./data.json');
     t.truthy(create);
   } catch (err) {
     console.log(err);

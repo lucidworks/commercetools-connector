@@ -10,11 +10,44 @@ const {performance} = require('perf_hooks');
  */
 class Index {
   /**
-   * Create an index using a json file
+   * Create an index using json
    *
    * @memberof Index
    */
-  async create(dataJson) {
+
+   async create(jsonArray) {
+    return new Promise((resolve, reject) => {
+      const data = dataJson || process.argv.slice(2)[0];
+
+      /**
+       * we need to have a parser on fusion that parses json lists as 'indexed_numbered' and not 'multivalued' which is the default
+       * use the name of that parser for the value of the parserId param
+       */
+      fetch(
+        `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
+          Config.export().FUSION_COLLECTION
+        }/?parserId=${Config.export().FUSION_PARSER}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Basic ${Config.basicAuth()}`
+          },
+          // headers: { authorization: `Bearer ${Config.jwtToken()}` },
+          body: jsonArray
+        }
+      )
+        .then(response => response.json())
+        .then(json => {
+          resolve(json);
+        })
+        .catch(err => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
+   }
+  async createFromFile(dataJson) {
     return new Promise((resolve, reject) => {
       const data = dataJson || process.argv.slice(2)[0];
 

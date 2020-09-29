@@ -1,7 +1,7 @@
 [build]
   command = "./build.sh"
-  publish = "./packages/store/dist"
-
+  publish = "packages/store/dist"
+  functions = "packages/store/src/functions/product"
 # Rule for router history mode
 [[redirects]]
   from = "/*"
