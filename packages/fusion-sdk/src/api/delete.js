@@ -49,19 +49,18 @@ class Delete {
  * usage : node src/api/index.js ./data.json
  */
 (async () => {
-  //console.log('start');
+  console.log('start');
   const t0 = performance.now();
   try {
     const del = new Delete();
     const result = await del.delete();
     const t1 = performance.now();
-    //console.log('deleted in ' + (t1 - t0) + ' milliseconds.');
-    console.log(require('util').inspect(result, false, null, true));
+    console.log('deleted in ' + Math.round(t1 - t0) + ' milliseconds.');
+    //console.log(require('util').inspect(result, false, null, true));
   } catch (err) {
-    //console.error(err.message);
-    console.error('');
+    console.error(err.message);
   } finally {
-    //console.log('end');
+    console.log('end');
   }
 })();
 
