@@ -48,7 +48,7 @@
     "url": "https://github.com/rquintanilla-ne/fusion-sdk"
   },
   "nyc": {
-    "exclude": ["**/config.js", "**/jwt.js", "**/user.js"]
+    "exclude": ["**/config.js", "**/jwt.js", "**/user.js", "**/test.js"]
   },
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
@@ -64,6 +64,12 @@
     "space": true,
     "extends": [
       "xo-lass"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
     ]
   }
 }

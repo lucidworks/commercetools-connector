@@ -15,7 +15,7 @@ class Query {
    *
    * @memberof Query
    */
-  async run(query, sort, parser, queryField) {
+  async run(query, sort, parser, queryField, facets, facetQueries) {
 
     let sortParam = '';
     if(typeof sort !== 'undefined')
@@ -25,7 +25,9 @@ class Query {
     if(typeof queryField !== 'undefined')
       queryFieldParam = '&qf=' + queryField;
 
-    let urlParams = 'q='+query+sortParam+queryFieldParam; 
+    const facetParams = buildFacetParams(facets, facetQueries);
+
+    let urlParams = 'q=' + query + sortParam + queryFieldParam + facetParams; 
 
     if(typeof parser === 'undefined')
       parser = Config.export().FUSION_PARSER_TYPE
@@ -58,6 +60,28 @@ class Query {
         });
     });
   }
+}
+
+/**
+ * Constructs the facet query syntax based on provided facets and facetQueries
+ * facets should be provided in a string array matching the syntax on the product docs
+ * facetQueries should be provided in an object matching the 
+ * @param {String[]} facets 
+ * @param {Object} facetQueries 
+ */
+function buildFacetParams(facets, facetQueries) {
+  if(!facets && !facetQueries)
+    return '';  // TODO: determinine if this should return undefined/null instead of empty string
+  let facetParam = ['&facet=true'];
+  if(Array.isArray(facets))
+    facetParam.push(`&facet.field=${facets.join('&facet.field=')}`);
+  if(typeof facetQueries === 'object') {
+    const facetQuery = Object.keys(facetQueries)
+      .map((key) => key + ':' + facetQueries[key])
+      .join('&fq=');
+    facetParam.push(`&fq=${facetQuery}`);
+  }
+  return facetParam.join('');
 }
 
 /**
@@ -191,4 +215,4 @@ function getSunriseJson_indexed(docs) {
 //   }
 // })()
 
-module.exports = Query
+module.exports = {Query, buildFacetParams}
