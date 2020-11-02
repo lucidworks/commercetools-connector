@@ -53,7 +53,8 @@ class Index {
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${Config.jwtToken()}`
+            'Authorization': `Bearer ${Config.jwtToken()}`,
+            'Content-Type': 'text/csv'
           },
           // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: require('fs').createReadStream(data)
@@ -81,7 +82,11 @@ class Index {
   const t0 = performance.now();
   try {
     const ndx = new Index();
-    const result = await ndx.createFromFile();
+    const result = await ndx.createFromFile().catch(e => {
+      console.log('index errored out.')
+      throw e
+   })
+
     const t1 = performance.now();
     console.log('indexed in ' + Math.round(t1 - t0) + ' milliseconds.');
     // console.log(require('util').inspect(result, false, null, true));
