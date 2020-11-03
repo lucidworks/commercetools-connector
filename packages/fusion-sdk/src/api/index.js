@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const Config = require('../config');
-const {isNull} = require('util');
 const {performance} = require('perf_hooks');
 
 /**
@@ -15,9 +14,9 @@ class Index {
    * @memberof Index
    */
 
-   async create(jsonArray) {
+  /* istanbul ignore next */
+  async create(jsonArray) {
     return new Promise((resolve, reject) => {
-      const data = jsonArray || process.argv.slice(2)[0];
       fetch(
         `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
           Config.export().FUSION_COLLECTION
@@ -25,13 +24,15 @@ class Index {
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${Config.jwtToken()}`
+            Authorization: `Bearer ${Config.jwtToken()}`
           },
           // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: jsonArray
         }
       )
+      /* eslint-disable-next-line promise/prefer-await-to-then */
         .then(response => response.json())
+      /* eslint-disable-next-line promise/prefer-await-to-then */
         .then(json => {
           resolve(json);
         })
@@ -40,8 +41,8 @@ class Index {
           reject(err);
         });
     });
+  }
 
-   }
   async createFromFile(dataJson) {
     return new Promise((resolve, reject) => {
       const data = dataJson || process.argv.slice(2)[0];
@@ -53,13 +54,15 @@ class Index {
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${Config.jwtToken()}`
+            Authorization: `Bearer ${Config.jwtToken()}`
           },
           // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: require('fs').createReadStream(data)
         }
       )
+      /* eslint-disable-next-line promise/prefer-await-to-then */
         .then(response => response.json())
+        /* eslint-disable-next-line promise/prefer-await-to-then */
         .then(json => {
           resolve(json);
         })
@@ -84,7 +87,7 @@ class Index {
     const result = await ndx.createFromFile();
     const t1 = performance.now();
     console.log('indexed in ' + Math.round(t1 - t0) + ' milliseconds.');
-    // console.log(require('util').inspect(result, false, null, true));
+    console.log(require('util').inspect(result, false, null, true));
   } catch (err) {
     console.error(err.message);
   } finally {

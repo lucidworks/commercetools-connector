@@ -5,7 +5,7 @@ import {
 
 //process.env.FUSION_SIGNING_KEY = '***REMOVED***';
 //const runQuery = require ('fusion-sdk/src/api/query').runQuery;
-const Query = require ('fusion-sdk/src/api/query');
+const fusionQuery = require ('fusion-sdk/src/api/query');
 
 const products = {
   get: withToken(
@@ -21,8 +21,7 @@ const products = {
 
       let searchArray = isSearch(urlparams);
       if(searchArray[0]) {
-        const query = new Query();
-        return query.run(searchArray[1], searchArray[2]).then(JSON.parse);
+        return fusionQuery.runQuery(searchArray[1], searchArray[2], 'csv').then(JSON.parse);
       } else {
         return groupFetchJson(
           toUrl(
