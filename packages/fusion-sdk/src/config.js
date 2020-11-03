@@ -18,7 +18,8 @@ class Config {
    */
   static export() {
     return {
-      FUSION_PARSER_TYPE: 'json', //text, json
+      FUSION_PARSER_TYPE: 'csv', // text, json, csv
+      /* eslint-disable-next-line max-len */
       FUSION_JWT_TOKEN: '***REMOVED***',
       FUSION_SIGNING_KEY: 'Commercetools',
       FUSION_HOST: 'general.dcom.lucidworkstest.com',
@@ -30,6 +31,7 @@ class Config {
       FUSION_COLLECTION: 'sunrise',
       FUSION_INDEX_PROFILE: 'sunrise-testing',
       FUSION_PARSER: 'sunrise',
+      /* eslint-disable-next-line max-len */
       FUSION_AUTH: '***REMOVED***
     };
   }
@@ -72,11 +74,11 @@ class Config {
    */
   static jwtToken() {
     if (Config.export().FUSION_JWT_TOKEN) {
-      //console.log('exists');
+      // console.log('exists');
     } else {
       const token = JWT.sign(
         Config.jwtPayload(),
-        //process.env.FUSION_SIGNING_KEY
+        // process.env.FUSION_SIGNING_KEY
         Config.export().FUSION_SIGNING_KEY
       );
 
