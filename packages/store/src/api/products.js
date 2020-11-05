@@ -1,39 +1,39 @@
 /* eslint-disable */
-import {
-  withToken, groupFetchJson, makeConfig, toUrl, baseUrl,
-} from './api';
+import { withToken, groupFetchJson, makeConfig, toUrl, baseUrl } from "./api";
 
 //process.env.FUSION_SIGNING_KEY = '***REMOVED***';
 //const runQuery = require ('fusion-sdk/src/api/query').runQuery;
-const fusionQuery = require ('fusion-sdk/src/api/query');
+const fusionQuery = require("fusion-sdk/src/api/query");
 
 const products = {
-  get: withToken(
-     (query, { access_token: accessToken }) => {
+  get: withToken((query, { access_token: accessToken }) => {
+    if (query.category) {
+      query.filter = `categories.id:subtree("${query.category}")`;
+      delete query.category;
+    }
 
-        if (query.category) {
-          query.filter = `categories.id:subtree("${query.category}")`;
-          delete query.category;
-        }
+    const urlparams = Object.entries(query).filter(([, v]) => v !== undefined);
 
-        const urlparams = Object.entries(query)
-        .filter(([, v]) => v !== undefined);
-
-      let searchArray = isSearch(urlparams);
-      if(searchArray[0]) {
-        return fusionQuery.runQuery(searchArray[1], searchArray[2], 'csv').then(JSON.parse);
-      } else {
-        return groupFetchJson(
-          toUrl(
-            `${baseUrl}/product-projections/search`,
-            { query },
-          ),
-          makeConfig(accessToken),
-        );
-      } 
-    },
-  ),
-  getItem: query => query,
+    let searchArray = isSearch(urlparams);
+    if (searchArray[0]) {
+      return fusionQuery
+        .runQuery(
+          searchArray[1],
+          searchArray[2],
+          "csv",
+          undefined,
+          ["size_s", "designer_s", "color_s"],
+          { size_s: "34" }
+        )
+        .then(JSON.parse);
+    } else {
+      return groupFetchJson(
+        toUrl(`${baseUrl}/product-projections/search`, { query }),
+        makeConfig(accessToken)
+      );
+    }
+  }),
+  getItem: (query) => query,
 };
 
 // function getSearchValue(obj) {
@@ -48,11 +48,11 @@ const products = {
 function isSearch(obj) {
   const searchArray = new Array(3);
   for (const [key, value] of obj) {
-    if(key === 'text.en' || key === 'text.de') {
+    if (key === "text.en" || key === "text.de") {
       searchArray[0] = true;
       searchArray[1] = value;
     }
-    if(key === 'sort') {
+    if (key === "sort") {
       searchArray[2] = value;
     }
   }

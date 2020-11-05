@@ -2,3 +2,5 @@ node_modules
 
 packages/commercetools-postman-collection/
 packages/commercetools-sunrise-data/
+# Local Netlify folder
+.netlify
