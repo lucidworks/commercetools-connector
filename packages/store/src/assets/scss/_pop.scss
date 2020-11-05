@@ -48,9 +48,13 @@
   text-transform: uppercase;
 }
 .product-filter {
-  padding: 0;
+  padding: 0 15px;
   width: 25%;
   float: left;
+
+  ul {
+    padding-left: 0;
+  }
 }
 .jumbotron {
   margin: 0 15px;
@@ -69,10 +73,10 @@
 
 // since we are not using the filters on the left side,
 // #pop-product-list {
-  // @media screen and (min-width: 767px) {
-  //   float: right;
-  //   width: 75%;
-  // }
+// @media screen and (min-width: 767px) {
+//   float: right;
+//   width: 75%;
+// }
 // }
 
 .jumbotron-row {
@@ -84,8 +88,8 @@
 .panel-body {
   padding: 0;
 }
-.panel-group .panel-heading+.panel-collapse>.list-group,
-.panel-group .panel-heading+.panel-collapse>.panel-body {
+.panel-group .panel-heading + .panel-collapse > .list-group,
+.panel-group .panel-heading + .panel-collapse > .panel-body {
   border-top: 0;
 }
 .panel-title {
@@ -99,7 +103,7 @@
     color: $gray;
   }
 }
-.panel-group .panel+.panel {
+.panel-group .panel + .panel {
   margin-top: 0;
 }
 .panel {
@@ -147,7 +151,9 @@
 }
 li.category-active {
   font-weight: bold;
-  ul { font-weight: normal; }
+  ul {
+    font-weight: normal;
+  }
 }
 
 // Price slider

@@ -98,7 +98,27 @@ const getProducts = (component) => {
         })
       ),
     };
-    component.facets = facets;
+
+    let faceLabels = [
+      { variant: "variants.attributes.size_s", label: "Size", name: "size" },
+      {
+        variant: "variants.attributes.designer_s",
+        label: "Designer",
+        name: "designer",
+      },
+      { variant: "variants.attributes.color_s", label: "Color", name: "color" },
+    ];
+    let filteredFacets = [];
+
+    facets.map((facet, i) => {
+      filteredFacets.push({
+        name: faceLabels[i].name,
+        label: faceLabels[i].label,
+        terms: facet[faceLabels[i].variant].terms,
+      });
+    });
+
+    component.facets = filteredFacets;
     component.loadingProducts = false;
     component.loadingFacets = false;
   });
