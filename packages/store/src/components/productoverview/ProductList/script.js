@@ -34,6 +34,7 @@ const removeHiddenFacetFromQuery = (facets, component) => {
     )
     .filter(([key]) => facetKeys.includes(key))
     .filter(([key, value]) => !(facetObject.get(key) || []).includes(value));
+
   if (missing.length) {
     // remove the facets that are missing from query
     const query = missing.reduce(
@@ -71,6 +72,14 @@ const getProducts = (component) => {
   const sort = sortValue
     ? { sort: `lastModifiedAt ${sortValue === "newest" ? "desc" : "asc"}` }
     : {};
+
+  const filterSelections = Object.keys(route.query)
+    .filter((query) => query !== "q")
+    .reduce((result, item) => {
+      result[`${item}_s`] = `${route.query[item]}`;
+      return result;
+    }, {});
+
   last(
     products.get({
       category,
@@ -78,28 +87,29 @@ const getProducts = (component) => {
       pageSize: component.limit,
       ...sort,
       ...searchText,
+      filters: filterSelections,
     })
   ).then(({ facets, results, ...meta }) => {
-    let faceLabels = [
-      { variant: "variants.attributes.size_s", label: "Size", name: "size" },
-      {
-        variant: "variants.attributes.designer_s",
-        label: "Designer",
-        name: "designer",
-      },
-      { variant: "variants.attributes.color_s", label: "Color", name: "color" },
-    ];
-    let filteredFacets = [];
+    const searchFilters = facets.map((facet) => {
+      const name = Object.keys(facet)[0]
+        .split(".")[2]
+        .split("_")[0];
 
-    facets.map((facet, i) => {
-      filteredFacets.push({
-        name: faceLabels[i].name,
-        label: faceLabels[i].label,
-        terms: facet[faceLabels[i].variant].terms,
-      });
+      const label = `${name.charAt(0).toUpperCase()}${Object.keys(facet)[0]
+        .split(".")[2]
+        .split("_")[0]
+        .slice(1)}`;
+
+      return {
+        label: label,
+        name: name,
+        terms: facet[Object.keys(facet)[0]].terms.filter(
+          (term) => term.count !== 0
+        ),
+      };
     });
 
-    removeHiddenFacetFromQuery(filteredFacets, component);
+    removeHiddenFacetFromQuery(searchFilters, component);
     component.products = {
       ...meta,
       results: results.map(
@@ -124,7 +134,7 @@ const getProducts = (component) => {
       ),
     };
 
-    component.facets = filteredFacets;
+    component.facets = searchFilters;
     component.loadingProducts = false;
     component.loadingFacets = false;
   });

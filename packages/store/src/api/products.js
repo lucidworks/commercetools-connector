@@ -23,7 +23,7 @@ const products = {
           "csv",
           undefined,
           ["size_s", "designer_s", "color_s"],
-          { size_s: "34" }
+          query.filters
         )
         .then(JSON.parse);
     } else {
