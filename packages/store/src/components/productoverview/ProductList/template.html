@@ -2,12 +2,12 @@
   <LoadingSpinner v-if="isLoading" />
   <div v-else-if="categories && products">
     <ProductFilter
+      v-if="facets.length"
       :facets="facets"
       :facetFilter="facetFilter"
       v-on:filterChange="facetFilterChange"
       v-on:channelChange="channelChange"
       :allChannels="allChannels"
-      v-bind:show="show"
     />
     <form
       v-if="products.results.length"

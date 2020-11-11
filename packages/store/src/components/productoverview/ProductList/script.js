@@ -90,26 +90,31 @@ const getProducts = (component) => {
       filters: filterSelections,
     })
   ).then(({ facets, results, ...meta }) => {
-    const searchFilters = facets.map((facet) => {
-      const name = Object.keys(facet)[0]
-        .split(".")[2]
-        .split("_")[0];
+    let searchFilters;
 
-      const label = `${name.charAt(0).toUpperCase()}${Object.keys(facet)[0]
-        .split(".")[2]
-        .split("_")[0]
-        .slice(1)}`;
+    if (JSON.stringify(facets) !== "{}") {
+      searchFilters = facets.map((facet) => {
+        const name = Object.keys(facet)[0]
+          .split(".")[2]
+          .split("_")[0];
 
-      return {
-        label: label,
-        name: name,
-        terms: facet[Object.keys(facet)[0]].terms.filter(
-          (term) => term.count !== 0
-        ),
-      };
-    });
+        const label = `${name.charAt(0).toUpperCase()}${Object.keys(facet)[0]
+          .split(".")[2]
+          .split("_")[0]
+          .slice(1)}`;
 
-    removeHiddenFacetFromQuery(searchFilters, component);
+        return {
+          label: label,
+          name: name,
+          terms: facet[Object.keys(facet)[0]].terms.filter(
+            (term) => term.count !== 0
+          ),
+        };
+      });
+
+      removeHiddenFacetFromQuery(searchFilters, component);
+    }
+
     component.products = {
       ...meta,
       results: results.map(
@@ -134,7 +139,7 @@ const getProducts = (component) => {
       ),
     };
 
-    component.facets = searchFilters;
+    component.facets = searchFilters !== undefined ? searchFilters : facets;
     component.loadingProducts = false;
     component.loadingFacets = false;
   });
