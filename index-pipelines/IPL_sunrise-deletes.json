@@ -1,0 +1,64 @@
+{
+    "id": "sunrise-deletes",
+    "stages": [
+        {
+            "type": "javascript-index",
+            "id": "df1ecd2a-05a7-4710-b10a-1fb687150cbf",
+            "script": "function (doc, ctx) {\n  // Set doc ID\n  var productID = doc.getFirstFieldValue(\"fusion_doc_id\");\n  doc.setId(productID);\n\n  return doc;\n}",
+            "type": "javascript-index",
+            "skip": false,
+            "label": "Set DocID",
+            "condition": "true",
+            "licensed": true,
+            "secretSourceStageId": "df1ecd2a-05a7-4710-b10a-1fb687150cbf"
+        },
+        {
+            "type": "javascript-index",
+            "id": "e022cfdb-9ec6-4ca9-818c-cd3e423fa4db",
+            "script": "function (doc, ctx, collection,solrServer) { \n  var actionField = \"action\";\n  if (doc.getFirstFieldValue(actionField) != null &&  doc.getFirstFieldValue(actionField) == \"DELETE\") {\n    solrServer.deleteById(doc.getId());\n    solrServer.commit();\n  }\n  return null;\n}",
+            "type": "javascript-index",
+            "skip": false,
+            "label": "JS - Handle Deletes",
+            "condition": "doc.getFirstField(\"action\") != null && doc.getFirstFieldValue(\"action\") == \"DELETE\";",
+            "licensed": true,
+            "secretSourceStageId": "e022cfdb-9ec6-4ca9-818c-cd3e423fa4db"
+        },
+        {
+            "type": "field-mapping",
+            "id": "e5c19dfd-39fc-4614-b3eb-ae9c640b0e73",
+            "mappings": [],
+            "reservedFieldsMappingAllowed": false,
+            "type": "field-mapping",
+            "skip": false,
+            "licensed": true,
+            "secretSourceStageId": "e5c19dfd-39fc-4614-b3eb-ae9c640b0e73"
+        },
+        {
+            "type": "solr-dynamic-field-name-mapping",
+            "id": "a3eccb90-6d5c-40f0-b126-c6882ae81327",
+            "duplicateSingleValuedFields": false,
+            "fieldsToExclude": [],
+            "advancedTextFieldsIndexing": true,
+            "maxTextLengthForAdvancedIndexing": 100,
+            "type": "solr-dynamic-field-name-mapping",
+            "skip": false,
+            "licensed": true,
+            "secretSourceStageId": "a3eccb90-6d5c-40f0-b126-c6882ae81327"
+        },
+        {
+            "type": "solr-index",
+            "id": "afb01b9d-63df-4157-9930-fd75ec193073",
+            "enforceSchema": true,
+            "dateFormats": [],
+            "params": [],
+            "bufferDocsForSolr": false,
+            "type": "solr-index",
+            "skip": false,
+            "licensed": true,
+            "secretSourceStageId": "afb01b9d-63df-4157-9930-fd75ec193073"
+        }
+    ],
+    "properties": {
+        "secretSourcePipelineId": "sunrise-deletes"
+    }
+}
