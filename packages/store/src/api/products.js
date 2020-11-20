@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { withToken, groupFetchJson, makeConfig, toUrl, baseUrl } from "./api";
 
-//process.env.FUSION_SIGNING_KEY = '***REMOVED***';
+//process.env.FUSION_SIGNING_KEY = 'abcd1234';
 //const runQuery = require ('fusion-sdk/src/api/query').runQuery;
 const fusionQuery = require("fusion-sdk/src/api/query");
 
