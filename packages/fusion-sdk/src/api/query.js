@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const Config = require('../config');
-// const { performance } = require('perf_hooks');
 
 /**
  * Run a query
@@ -35,7 +34,7 @@ async function runQuery(query, sort, parser, queryField, facets, facetQueries) {
   return new Promise((resolve, reject) => {
     fetch(
       /* eslint-disable-next-line max-len */
-      `${Config.url()}/api/apps/${Config.export().FUSION_APP}/query/${Config.export().FUSION_COLLECTION}?${urlParams}`,
+      `${Config.url()}/api/apps/${Config.export().FUSION_APP}/query/${Config.export().FUSION_QUERY_PROFILE}?${urlParams}`,
       {
         method: 'GET',
         headers: {
@@ -106,9 +105,6 @@ function parseSunriseText(json, sort) {
   const results = [];
   console.log('starting to parseSunriseText');
 
-  // TODO: validate facet response for json parser.
-  // sunriseText.facets = parseFacets(json.facet_counts);
-
   if (
     !json.response ||
     !Array.isArray(json.response.docs) ||
@@ -144,9 +140,6 @@ function parseSunriseJson(json) {
   const sunriseJson = {};
   const results = [];
   console.log('starting to parseSunriseJson');
-
-  // TODO: validate facet response for json parser.
-  // sunriseJson.facets = parseFacets(json.facet_counts);
 
   if (
     !json.response ||
@@ -274,22 +267,16 @@ function parseSunriseCsv(json) {
     const images = [];
     const img = {};
     img.url = doc.images_s.split('||')[0];
-    // TODO: determine where to get or how to handle missing dimensions
-    // let dimensions = {}
-    // dimensions['w'] = e['masterVariant.images.0.dimensions.w_i'];
-    // dimensions['h'] = e['masterVariant.images.0.dimensions.h_i'];
-    // img.dimensions = dimensions;
+
     images.push(img);
     masterVariant.images = images;
 
-    // TODO: validate prices schema - customerGroup, channel, countryCode,
     const prices = [];
     doc.prices_t.split(';').forEach(doc_price => {
       const price = {};
       const spaceDelimited = doc_price.split(' ');
       const hashtagDelimited = spaceDelimited[1].split('#');
 
-      // price['id'] = ?
       const value = {};
       value.type = 'centPrecision';
       value.centAmount = hashtagDelimited[0];
@@ -300,7 +287,6 @@ function parseSunriseCsv(json) {
         price.country = spaceDelimited[0].split('-')[0];
       } else {
         value.currencyCode = spaceDelimited[0];
-        // price['country'] = ?
       }
 
       price.value = value;
@@ -357,35 +343,5 @@ function parseFacets(facets) {
         }};
     });
 }
-
-/**
- * TEST for command line use
- * usage:  node src/api/query.js wallet
- */
-// (async () => {
-//   console.log('start')
-//   var t0 = performance.now();
-//   try {
-//     const qry = new Query();
-
-// const result = await qry.run(
-//   process.argv.slice(2)[0],
-//   '_dt asc',
-//   'csv',
-//   undefined,
-//   ['size_s'],
-//   {size_s:'34'}
-// )
-
-//     var t1 = performance.now();
-//     console.log("queried in " + (t1 - t0) + " milliseconds.");
-//     console.log(require('util').inspect(result, false, null, true));
-
-//   } catch (err) {
-//     console.error(err.message);
-//   } finally {
-//     console.log('end');
-//   }
-// })()
 
 module.exports = {runQuery, buildFacetParams, parseSunriseCsv};

@@ -3,13 +3,13 @@ const Config = require('../config');
 const {performance} = require('perf_hooks');
 
 /**
- * Component wrapper for Fusion API - Users
+ * Component wrapper for Fusion API - Delete
  *
  * @class Delete
  */
 class Delete {
   /**
-   * Create an index using a json file
+   * Delete an item
    *
    * @memberof Delete
    */
@@ -46,7 +46,7 @@ class Delete {
 /**
  * test for command line use
  *
- * usage : node src/api/index.js ./data.json
+ * usage : node src/api/delete.js <product id>
  */
 (async () => {
   console.log('start');
@@ -56,7 +56,6 @@ class Delete {
     const result = await del.delete();
     const t1 = performance.now();
     console.log('deleted in ' + Math.round(t1 - t0) + ' milliseconds.');
-    //console.log(require('util').inspect(result, false, null, true));
   } catch (err) {
     console.error(err.message);
   } finally {

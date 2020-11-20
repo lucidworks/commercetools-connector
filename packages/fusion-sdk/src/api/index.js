@@ -19,14 +19,13 @@ class Index {
     return new Promise((resolve, reject) => {
       fetch(
         `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
-          Config.export().FUSION_COLLECTION
+          Config.export().FUSION_INDEX_PROFILE
         }/?parserId=${Config.export().FUSION_PARSER}`,
         {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${Config.jwtToken()}`
           },
-          // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: jsonArray
         }
       )
@@ -49,7 +48,7 @@ class Index {
 
       fetch(
         `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
-          Config.export().FUSION_COLLECTION
+          Config.export().FUSION_INDEX_PROFILE
         }/?parserId=${Config.export().FUSION_PARSER}`,
         {
           method: 'POST',
@@ -57,7 +56,6 @@ class Index {
             'Authorization': `Bearer ${Config.jwtToken()}`,
             'Content-Type': 'text/csv'
           },
-          // headers: { authorization: `Bearer ${Config.jwtToken()}` },
           body: require('fs').createReadStream(data)
         }
       )

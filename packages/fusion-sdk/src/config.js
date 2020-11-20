@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const JWT = require('./auth/jwt');
-// const { config } = require('dotenv/types');
 
 /**
  *
@@ -18,21 +17,21 @@ class Config {
    */
   static export() {
     return {
-      FUSION_PARSER_TYPE: 'csv', // text, json, csv
+      FUSION_PARSER_TYPE: '',
       /* eslint-disable-next-line max-len */
-      FUSION_JWT_TOKEN: '***REMOVED***',
-      FUSION_SIGNING_KEY: 'Commercetools',
-      FUSION_HOST: 'general.dcom.lucidworkstest.com',
-      FUSION_PORT: '443',
-      FUSION_ISS: 'sunrise',
-      FUSION_SUB: 'sunrise',
-      FUSION_USERNAME: 'commercetools_dev',
-      FUSION_APP: 'Commercetools',
-      FUSION_COLLECTION: 'sunrise',
-      FUSION_INDEX_PROFILE: 'sunrise-testing',
-      FUSION_PARSER: 'sunrise',
+      FUSION_JWT_TOKEN: '',
+      FUSION_SIGNING_KEY: '',
+      FUSION_HOST: '',
+      FUSION_PORT: '',
+      FUSION_ISS: '',
+      FUSION_SUB: '',
+      FUSION_USERNAME: '',
+      FUSION_APP: '',
+      FUSION_QUERY_PROFILE: '',
+      FUSION_INDEX_PROFILE: '',
+      FUSION_PARSER: '',
       /* eslint-disable-next-line max-len */
-      FUSION_AUTH: '***REMOVED***
+      FUSION_AUTH: ''
     };
   }
 
@@ -74,11 +73,9 @@ class Config {
    */
   static jwtToken() {
     if (Config.export().FUSION_JWT_TOKEN) {
-      // console.log('exists');
     } else {
       const token = JWT.sign(
         Config.jwtPayload(),
-        // process.env.FUSION_SIGNING_KEY
         Config.export().FUSION_SIGNING_KEY
       );
 
