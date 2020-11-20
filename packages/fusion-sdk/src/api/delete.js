@@ -53,7 +53,7 @@ class Delete {
   const t0 = performance.now();
   try {
     const del = new Delete();
-    const result = await del.delete();
+    await del.delete();
     const t1 = performance.now();
     console.log('deleted in ' + Math.round(t1 - t0) + ' milliseconds.');
   } catch (err) {
