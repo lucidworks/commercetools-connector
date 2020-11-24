@@ -4,4 +4,7 @@ packages/commercetools-postman-collection/
 packages/commercetools-sunrise-data/
 # Local Netlify folder
 .netlify
+
+# Environment info files
 .env
+packages/fusion-sdk/src/config.js
