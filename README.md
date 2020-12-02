@@ -19,7 +19,12 @@
 
 ## About
 
-This monorepository created by New Elevation contains a plug-in (fusion-sdk) intended to enable the extraction of catalog data from commercetools into Lucidworks to provide a more dynamic search option for users.  This data once indexed can be queried and searched from the Sunrise SPA (store) using the Lucidworks Fusion API
+<p>This monorepository created by New Elevation contains a plug-in (fusion-sdk) intended to enable the extraction of catalog data from commercetools into Lucidworks to provide a more dynamic search option for users.  This data once indexed can be queried and searched from the Sunrise SPA (store) using the Lucidworks Fusion API
+</p>
+
+<p>
+  <img alt="Architecture Diagram" src="https://user-images.githubusercontent.com/6887820/100938471-92168980-34a9-11eb-8344-b9cd6e7c5b3a.png">
+</p>
 
 ## Getting Started
 Clone the Repository - `git clone git@github.com:newelevation/lucidworks.git`
