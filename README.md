@@ -27,7 +27,7 @@
 </p>
 
 ## Getting Started
-Clone the Repository - `git clone git@github.com:newelevation/lucidworks.git`
+Clone the Repository - `git clone git@github.com:lucidworks/commercetools-connector.git`
 
 Install Lerna and Yarn - `npm i -g lerna yarn`
 
@@ -38,7 +38,7 @@ The fusion-sdk is Node module that should be installed as package.json dependenc
 
 Steps   | with [Yarn](https://yarnpkg.com/)  | with [NPM](https://www.npmjs.com/) |
 ------- | ---------------------------------- | ---------------------------------- |
-Install | `yarn add fusion-sdk`              | `npm install fusion-sdk`           |
+Install | `yarn add fusion-sdk`              | `npm install`           |
 
 ## Run the Sunrise SPA
 
