@@ -53,16 +53,14 @@ In order for the fusion search to function properly the src/config.js needs to h
 ```javascript
 static export() {
     return {
-      FUSION_SIGNING_KEY: '<key>',
+      FUSION_PARSER_TYPE: '<parser type - e.g. csv>',
+      FUSION_JWT_TOKEN: '<jwt token>',
       FUSION_HOST: '<host>',
       FUSION_PORT: '<port>',
-      FUSION_ISS: '<iss>',
-      FUSION_SUB: '<sub>',
-      FUSION_USERNAME: '<user name>',
       FUSION_APP: '<app name>',
-      FUSION_COLLECTION: '<collection name>',
-      FUSION_PARSER: '<parser name>',
-      FUSION_AUTH: '<basic auth string>'
+      FUSION_QUERY_PROFILE: '<query profile name>',
+      FUSION_INDEX_PROFILE: '<index profile name>',
+      FUSION_PARSER: '<parser name>'
     };
   }
   ```
