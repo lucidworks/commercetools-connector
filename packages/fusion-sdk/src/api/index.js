@@ -44,13 +44,10 @@ class Index {
   async createFromFile(dataJson) {
     return new Promise((resolve, reject) => {
       const data = dataJson || process.argv.slice(2)[0];
-      console.log('data =', data);
-      console.log('jwtToken =', Config.jwtToken());
 
       fetch(
         `${Config.url()}/api/apps/${Config.export().FUSION_APP}/index/${
           Config.export().FUSION_INDEX_PROFILE}`,
-        // }/?parserId=${Config.export().FUSION_PARSER}`,
         {
           method: 'POST',
           headers: {
@@ -61,11 +58,7 @@ class Index {
         }
       )
       /* eslint-disable-next-line promise/prefer-await-to-then */
-        .then(response => {
-          let jsonResp = response.json();
-          console.log('jsonResp =', jsonResp);
-          return jsonResp;
-        })
+        .then(response => response.json())
         /* eslint-disable-next-line promise/prefer-await-to-then */
         .then(json => {
           resolve(json);
